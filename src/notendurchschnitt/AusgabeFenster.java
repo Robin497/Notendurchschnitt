@@ -10,7 +10,10 @@ package notendurchschnitt;
  * @author Robin Sapakota
  */
 public class AusgabeFenster extends javax.swing.JFrame {
-
+double ergebnis=0;
+double KAergebnis=0;
+double mdlergebnis=0;
+double[] Arbeiten =new double[8];
     /**
      * Creates new form AusgabeFenster
      */
@@ -31,6 +34,7 @@ public class AusgabeFenster extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,6 +69,12 @@ public class AusgabeFenster extends javax.swing.JFrame {
             }
         });
 
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,7 +87,9 @@ public class AusgabeFenster extends javax.swing.JFrame {
                 .addGap(338, 338, 338)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField2)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -88,14 +100,16 @@ public class AusgabeFenster extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 247, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 189, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        double[] Arbeiten =new double[8];
+        
         for (int i = 1; i <= jTable1.getColumnCount()-3; i++) {
             if(jTable1.getValueAt(0, i)!=null)
             {
@@ -119,26 +133,41 @@ public class AusgabeFenster extends javax.swing.JFrame {
        double M4= Double.parseDouble(jTable1.getValueAt(0, 8).toString());
        
         double Ergebnis =(A1+A2+A3+A4+M1+M2+M3+M4)/8;*/
-       double ergebnis=0;
+       
         for (int i = 0; i < jTable1.getColumnCount()-3; i++) {
            
-            ergebnis+= Arbeiten[i];
+            ergebnis+=(Arbeiten[i]); 
         }
-       //ergebnis=ergebnis/(jTable1.getColumnCount()-3);
+       ergebnis=ergebnis/(jTable1.getColumnCount()-3);
        
        
         System.out.println(jTable1.getColumnCount());
        
        
-
+       
+        
        
         jTextField1.setText(Double.toString(ergebnis));
+        jTextField2.setText(Double.toString(KASchnitt()));
     
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    public double KASchnitt(){
+        for (int i = 0; i < 5; i++) {
+         KAergebnis+=Arbeiten[i]; 
+         
+         
+        }
+        double schnitt= KAergebnis/4;
+        return schnitt;
+        
+    }
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,5 +209,6 @@ public class AusgabeFenster extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
