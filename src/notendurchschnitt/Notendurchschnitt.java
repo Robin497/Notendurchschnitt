@@ -18,6 +18,7 @@ public class Notendurchschnitt {
         AusgabeFenster af = new AusgabeFenster();
         af.setVisible(true);
         af.setTitle("Notendurschnitt berechnen");
+        af.setLocationRelativeTo(null);
     }
     
 }

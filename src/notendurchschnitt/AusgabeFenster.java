@@ -10,10 +10,18 @@ package notendurchschnitt;
  * @author Robin Sapakota
  */
 public class AusgabeFenster extends javax.swing.JFrame {
-double ergebnis=0;
-double KAergebnis=0;
-double mdlergebnis=0;
-double[] Arbeiten =new double[8];
+
+    double ergebnisNP = 0;
+    double KAergebnis = 0;
+    double mdlergebnis = 0;
+    double[] Arbeiten = new double[8];
+    double ergebnisN = 0;
+    double ergebnisKA = 0;
+    double ergebnismdl = 0;
+    int Zähler;
+    public double SV1 = 0;
+    public double SV2 = 0;
+
     /**
      * Creates new form AusgabeFenster
      */
@@ -33,6 +41,11 @@ double[] Arbeiten =new double[8];
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
 
@@ -40,21 +53,41 @@ double[] Arbeiten =new double[8];
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Fach", "KA 1", "KA 2", "KA 3", "KA 4", "mdl 1", "mdl 2", "mdl 3", "mdl 4", "Notenpunkte", "Note "
+                "KA 1", "KA 2", "KA 3", "KA 4", "mdl 1", "mdl 2", "mdl 3", "mdl 4", "Notenpunkte", "Note "
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                true, true, true, true, true, true, true, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
+        jTable1.setRowHeight(30);
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
+            jTable1.getColumnModel().getColumn(6).setResizable(false);
+            jTable1.getColumnModel().getColumn(7).setResizable(false);
+            jTable1.getColumnModel().getColumn(8).setResizable(false);
+            jTable1.getColumnModel().getColumn(9).setResizable(false);
+        }
 
         jButton1.setText("Berechnen");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -63,111 +96,165 @@ double[] Arbeiten =new double[8];
             }
         });
 
+        jTextArea1.setEditable(false);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Deutsch", "Mathe ", "Englisch", "GK", "Physik", "Latein", "Chemie", "Bio", "Kunst", "Musik", "Geschichte", "Erdkunde", "Informatik", "vma", "Ethik", "Religion", "Sport" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "50", "75", "66", "60", " ", " " }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "50", "40", "33", "25", " " }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setText("Schriftlich");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
+        jTextField2.setText("Mündlich");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(338, 338, 338)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
+                .addGap(108, 108, 108)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextField1)
+                    .addComponent(jTextField2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(37, 37, 37)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 189, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        for (int i = 1; i <= jTable1.getColumnCount()-3; i++) {
-            if(jTable1.getValueAt(0, i)!=null)
-            {
-             Arbeiten[i-1]= Double.parseDouble(jTable1.getValueAt(0, i).toString());
-            }
-            else {
-                System.out.println("Error bei"+i);
+        ergebnisKA = 0;
+        ergebnismdl = 0;
+        Zähler = 0;
+        jTextArea1.setText("");
+        for (int i = 0; i < jTable1.getColumnCount() - 2; i++) {
+            if (jTable1.getValueAt(0, i) != null) {
+                Arbeiten[i] = Double.parseDouble(jTable1.getValueAt(0, i).toString());
+            } else {
+                jTextArea1.append("Alle Spalten bitte ausfüllen! Spalte " + (i + 1) + " wurde nicht ausgefüllt!\n");
+
             }
         }
-        
-        
-        
-        
-      /* double A1= Double.parseDouble(jTable1.getValueAt(0, 1).toString());
-       double A2= Double.parseDouble(jTable1.getValueAt(0, 2).toString());
-       double A3= Double.parseDouble(jTable1.getValueAt(0, 3).toString());
-       double A4= Double.parseDouble(jTable1.getValueAt(0, 4).toString());
-       double M1= Double.parseDouble(jTable1.getValueAt(0, 5).toString());
-       double M2= Double.parseDouble(jTable1.getValueAt(0, 6).toString());
-       double M3= Double.parseDouble(jTable1.getValueAt(0, 7).toString());
-       double M4= Double.parseDouble(jTable1.getValueAt(0, 8).toString());
-       
-        double Ergebnis =(A1+A2+A3+A4+M1+M2+M3+M4)/8;*/
-       
-        for (int i = 0; i < jTable1.getColumnCount()-3; i++) {
-           
-            ergebnis+=(Arbeiten[i]); 
+
+        for (int i = 0; i < (jTable1.getColumnCount() - 2) / 2; i++) {
+
+            ergebnisKA += Arbeiten[i];
         }
-       ergebnis=ergebnis/(jTable1.getColumnCount()-3);
-       
-       
+        KAergebnis = ergebnisKA / ((jTable1.getColumnCount() - 2) / 2);
+        for (int i = (jTable1.getColumnCount()-2)/2; i < jTable1.getColumnCount() - 2; i++) {
+            ergebnismdl += Arbeiten[i];
+        }
+        mdlergebnis = ergebnismdl / ((jTable1.getColumnCount() - 2) / 2);
+        if (SV1 + SV2 == 100) {
+            ergebnisNP = (KAergebnis * (SV1) + (SV2) * mdlergebnis) / 100;
+            ergebnisN = (17 - ergebnisNP) / 3;
+        }
+        else if(SV1+SV2==99){
+            ergebnisNP = (KAergebnis * (SV1) + (SV2) * mdlergebnis) / 99;
+            ergebnisN = (17 - ergebnisNP) / 3;
+        }
+        else {
+            jTextArea1.setText("Verhältnis bitte passend wählen! Ergbnis muss 100 sein!");
+        }
         System.out.println(jTable1.getColumnCount());
-       
-       
-       
-        
-       
-        jTextField1.setText(Double.toString(ergebnis));
-        jTextField2.setText(Double.toString(KASchnitt()));
-    
-    }//GEN-LAST:event_jButton1ActionPerformed
-    public double KASchnitt(){
-        for (int i = 0; i < 5; i++) {
-         KAergebnis+=Arbeiten[i]; 
-         
-         
+
+        for (int i = 0; i < jTable1.getColumnCount() - 2; i++) {
+            if (jTable1.getValueAt(0, i) != null) {
+                Zähler += 1;
+            }
+            if (Zähler == 8) {
+                jTable1.setValueAt(ergebnisNP, 0, 8);
+                jTable1.setValueAt(ergebnisN, 0, 9);
+                jTextArea1.setText("");
+            }
         }
-        double schnitt= KAergebnis/4;
-        return schnitt;
-        
-    }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    /**
+     *
+     * @return
+     */
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        SV1 = Double.parseDouble(jComboBox1.getSelectedItem().toString());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        SV2 = Double.parseDouble(jComboBox2.getSelectedItem().toString()); // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,8 +293,13 @@ double[] Arbeiten =new double[8];
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
