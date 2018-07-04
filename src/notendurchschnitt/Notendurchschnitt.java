@@ -10,15 +10,9 @@ package notendurchschnitt;
  * @author Robin Sapakota
  */
 public class Notendurchschnitt {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        AusgabeFenster af = new AusgabeFenster();
-        af.setVisible(true);
-        af.setTitle("Notendurschnitt berechnen");
-        af.setLocationRelativeTo(null);
-    }
-    
+    public static void main (String args[]){
+     AusgabeFenster af =new AusgabeFenster();
+     af.setVisible(true);
+     af.setLocationRelativeTo(null);
+ }
 }
